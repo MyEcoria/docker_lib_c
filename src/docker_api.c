@@ -28,7 +28,7 @@ static size_t write_to_buffer(void *contents, size_t size,
 void init_curl(CURL *curl, char *url, struct MemoryBuffer *response)
 {
     curl_easy_setopt(curl, CURLOPT_URL, url);
-    curl_easy_setopt(curl, CURLOPT_UNIX_SOCKET_PATH, socket_address);
+    curl_easy_setopt(curl, CURLOPT_UNIX_SOCKET_PATH, SOCKET_ADDRESS);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_to_buffer);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)response);
 }
@@ -63,6 +63,24 @@ void init_curl_post(CURL *curl, struct curl_slist **headers, char *json_data)
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, *headers);
 }
 
+static char *make_api_request_post_init(struct MemoryBuffer *response,
+    CURL **curl_ptr)
+{
+    response->data = GC_MALLOC(1);
+    if (!response->data) {
+        fprintf(stderr, "Failed to allocate memory\n");
+        return NULL;
+    }
+    response->data[0] = '\0';
+    response->size = 0;
+    *curl_ptr = curl_easy_init();
+    if (!(*curl_ptr)) {
+        GC_FREE(response->data);
+        return NULL;
+    }
+    return response->data;
+}
+
 char *make_api_request_post(char *url, char *json_data)
 {
     CURL *curl;
@@ -70,26 +88,12 @@ char *make_api_request_post(char *url, char *json_data)
     struct MemoryBuffer response = {NULL, 0};
     struct curl_slist *headers = NULL;
 
-    response.data = GC_MALLOC(1);
-    if (!response.data) {
-        fprintf(stderr, "Failed to allocate memory\n");
-        return NULL;
-    }
-    response.data[0] = '\0';
-    response.size = 0;
-
-    curl = curl_easy_init();
-    if (!curl) {
-        GC_FREE(response.data);
-        return NULL;
-    }
-
+    response.data = make_api_request_post_init(&response, &curl);
     init_curl(curl, url, &response);
     init_curl_post(curl, &headers, json_data);
     res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
     curl_slist_free_all(headers);
-
     if (res != CURLE_OK) {
         GC_FREE(response.data);
         return NULL;

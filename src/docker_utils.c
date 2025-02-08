@@ -7,6 +7,11 @@
 */
 #include "docker.h"
 
+void fonction_initiale(void)
+{
+    GC_INIT();
+}
+
 bool allow_more_space(char **json, size_t *json_size)
 {
     char *buffer = *json;

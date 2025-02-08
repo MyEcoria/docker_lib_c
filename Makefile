@@ -20,8 +20,10 @@ RESET = \033[0m
 
 SRC	=	$(SRC_DIR)/docker_api.c \
 		$(SRC_DIR)/docker_config.c \
-		$(SRC_DIR)/docker_functions.c \
-		$(SRC_DIR)/docker_utils.c
+		$(SRC_DIR)/docker_image.c \
+		$(SRC_DIR)/docker_utils.c \
+		$(SRC_DIR)/docker_containers.c \
+		$(SRC_DIR)/docker_process.c
 
 OBJ	=	$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -50,6 +52,8 @@ clean: title_clean
 
 fclean: clean
 	-rm -f $(NAME)
+	-rm -f $(NAME).a
+	-rm -f *.log
 	-rm -f unit_tests
 
 test: re
@@ -64,4 +68,3 @@ title:
 
 title_clean:
 	@echo "$(RED)===== Nettoyage de Docker API =====$(RESET)"
-

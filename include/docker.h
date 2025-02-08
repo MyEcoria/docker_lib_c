@@ -7,8 +7,7 @@
 
 #ifndef DOCKER_H
     #define DOCKER_H
-    #define socket_address "/var/run/docker.sock"
-
+    #define SOCKET_ADDRESS "/var/run/docker.sock"
     #include <stdbool.h>
     #include <curl/curl.h>
     #include <json-c/json.h>
@@ -16,16 +15,13 @@
     #include <stdlib.h>
     #include <string.h>
     #include <gc.h>
-    __attribute__((constructor))
-    static void init_lib(void) {
-        GC_INIT();
-    }
 
 struct MemoryBuffer {
     char *data;
     size_t size;
 };
 
+void fonction_initiale(void) __attribute__((constructor));
 char *make_api_request(char *url);
 char *make_api_request_post(char *url, char *json_data);
 char *get_conteneurs(void);
