@@ -36,13 +36,17 @@ int main(void)
 
 ## Files
 
-- `.gitignore`: Specifies files and directories to be ignored by Git.
-- `Makefile`: Contains the build instructions for the project.
-- `README.md`: This file.
-- `examples/create.c`: An example usage of the library.
-- `include/docker.h`: Header file containing function declarations and macros.
-- `src/docker_api.c`: Implementation of API request functions.
-- `src/docker_config.c`: Implementation of Docker container configuration functions.
+- `.gitignore`: Spécifie les fichiers et dossiers à ignorer par Git.
+- `Makefile`: Contient les instructions de compilation du projet.
+- `README.md`: Ce fichier.
+- `examples/create.c`: Exemple d'utilisation de la bibliothèque.
+- `include/docker.h`: Fichier d'en-tête contenant les déclarations de fonctions et macros.
+- `src/docker_api.c`: Implémentation des fonctions de requête vers l'API Docker.
+- `src/docker_config.c`: Implémentation des fonctions de configuration des conteneurs Docker.
+- `src/docker_image.c`: Implémentation des fonctions de gestion des images Docker.
+- `src/docker_utils.c`: Implémentation des fonctions utilitaires.
+- `src/docker_containers.c`: Implémentation des fonctions de gestion des conteneurs Docker.
+- `src/docker_process.c`: Implémentation des fonctions de gestion de processus Docker.
 
 ## Building
 

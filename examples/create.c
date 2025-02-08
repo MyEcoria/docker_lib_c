@@ -8,7 +8,7 @@
 
 int main(void)
 {
-    char *image = "ubuntu:latest";
+    char *image = "hashicorp/http-echo:latest";
     char *id;
     char *conteneurs;
 
@@ -17,7 +17,10 @@ int main(void)
     }
     conteneurs = get_conteneurs();
     printf("%s\n", conteneurs);
-    id = create_conteneur("ubuntu", (int[]){80, 8080}, 2, "test");
+    id = create_conteneur(image, (int[]){5678, 5678}, 2, "test");
     printf("%s\n", id);
+    if (start_conteneur(id) == false) {
+        return 84;
+    }
     return 0;
 }

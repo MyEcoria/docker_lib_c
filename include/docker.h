@@ -38,4 +38,6 @@ char *generate_config(char *image, int ports[], int port_count, char *name);
 int int_len(long long int nb);
 bool exec_process_start(char *id);
 bool pull_image(char *image);
+bool exec_process(char *id, char *cmd);
+bool exec_process_start(char *id);
 #endif

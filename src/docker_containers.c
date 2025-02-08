@@ -35,7 +35,7 @@ bool start_conteneur(char *id)
 
     sprintf(start_url, "http://localhost/containers/%s/start", id);
     buffer = make_api_request_post(start_url, "");
-    if (strstr(buffer, "message")) {
+    if (buffer == NULL || strstr(buffer, "message")) {
         printf("%s", buffer);
         return false;
     } else {
